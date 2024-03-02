@@ -34,4 +34,9 @@ public class ScheduleFCFS implements Scheduler {
 	public boolean hasTask() {
 		return !tasks.isEmpty();
 	}
+	
+	@Override
+	public List<Task> getAllTask() {
+		return new ArrayList<>(tasks);
+	}
 }

@@ -49,4 +49,9 @@ public class ScheduleSJFPreemptive implements Scheduler {
 	public boolean hasTask() {
 		return !tasks.isEmpty();
 	}
+	
+	@Override
+	public List<Task> getAllTask() {
+		return new ArrayList<>(tasks);
+	}
 }

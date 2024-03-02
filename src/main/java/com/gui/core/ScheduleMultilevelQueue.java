@@ -1,6 +1,7 @@
 package com.gui.core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ScheduleMultilevelQueue implements Scheduler {
 	private final ArrayList<Scheduler> schedulers;
@@ -46,5 +47,14 @@ public class ScheduleMultilevelQueue implements Scheduler {
 			if (scheduler.hasTask()) return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public List<Task> getAllTask() {
+		List<Task> tasks = new ArrayList<>();
+		for (int i = 0; i < 3; ++ i) {
+			tasks.addAll(schedulers.get(i).getAllTask());
+		}
+		return tasks;
 	}
 }

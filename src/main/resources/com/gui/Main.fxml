@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.MainController">
+   <children>
+      <AnchorPane fx:id="container" layoutY="100.0" prefHeight="980.0" prefWidth="1600.0" />
+      <ComboBox fx:id="options" layoutX="14.0" layoutY="14.0" onAction="#onOptionChoose" prefHeight="24.0" prefWidth="319.0" promptText="Scheduler Type" />
+      <Button layoutX="510.0" layoutY="15.0" mnemonicParsing="false" onAction="#chooseFile" text="Choose Input FIle" />
+      <Label fx:id="fileInput" layoutX="652.0" layoutY="15.0" prefHeight="24.0" prefWidth="917.0" />
+      <Button layoutX="774.0" layoutY="50.0" mnemonicParsing="false" onAction="#setup" text="Setup" />
+      <TextField fx:id="quantumInput" layoutX="88.0" layoutY="50.0" prefHeight="24.0" prefWidth="105.0" visible="false" />
+      <Label fx:id="quantumLabel" layoutX="14.0" layoutY="50.0" text="Quantum:" visible="false" />
+   </children>
+</AnchorPane>

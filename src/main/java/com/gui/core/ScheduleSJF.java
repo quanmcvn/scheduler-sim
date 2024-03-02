@@ -1,6 +1,8 @@
 package com.gui.core;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class ScheduleSJF implements Scheduler {
@@ -32,5 +34,10 @@ public class ScheduleSJF implements Scheduler {
 	@Override
 	public boolean hasTask() {
 		return !tasks.isEmpty();
+	}
+	
+	@Override
+	public List<Task> getAllTask() {
+		return new ArrayList<>(tasks);
 	}
 }

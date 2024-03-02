@@ -3,6 +3,7 @@ package com.gui.core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class SchedulePriorityPreemptive implements Scheduler {
 	private final ArrayList<Task> tasks;
@@ -50,5 +51,10 @@ public class SchedulePriorityPreemptive implements Scheduler {
 	@Override
 	public boolean hasTask() {
 		return !tasks.isEmpty();
+	}
+	
+	@Override
+	public List<Task> getAllTask() {
+		return new ArrayList<>(tasks);
 	}
 }

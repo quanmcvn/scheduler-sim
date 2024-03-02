@@ -25,6 +25,10 @@ public class OS {
 		return taskList;
 	}
 	
+	public Scheduler getScheduler() {
+		return scheduler;
+	}
+	
 	public OS() {
 		this.taskList = new ArrayList<>();
 		this.totalTaskList = new ArrayList<>();
@@ -90,17 +94,19 @@ public class OS {
 	private int currentRunTime = 0;
 	// dummy task
 	private final Task sleep = new Task("sleep", 100000, 100000, 100000, 0);
+	
 	private Task currentTask = sleep;
+	public Task getCurrentTask() {
+		return currentTask;
+	}
 	private boolean updated = false;
+	private boolean halfUpdated = false;
 	/**
-	 *  Get notified when there is (are) task(s) coming in
-	 *  Add that (those) task(s) to the scheduler and choose next task to be run
-	 *  Multiple tickUpdate() without tickRun() will do nothing
+	 * <p> Get notified when there is (are) task(s) coming in </p>
+	 * <p> Add that (those) task(s) to the scheduler </p>
 	 */
-	public void tickUpdate() {
-		if (updated) return;
-		
-		if (totalTaskRan >= taskList.size()) return;
+	public boolean tickHalfUpdate() {
+		if (halfUpdated) return false;
 		
 		while (indexNext < taskList.size()) {
 			if (taskList.get(indexNext).getArrivalTime() <= globalTime) {
@@ -108,6 +114,27 @@ public class OS {
 				++ indexNext;
 			} else break;
 		}
+		
+		halfUpdated = true;
+		return true;
+	}
+	
+	/**
+	 * <p> Choose the next task to be run </p>
+	 * <p> Will secretly call tickHalfUpdate() first (wait, is this really a secret now that i said it out loud?)</p>
+	 * <p> Multiple tickUpdate() without tickRun() will do nothing </p>
+	 *
+	 * @Return true if successfully update
+	 */
+	public boolean tickUpdate() {
+		if (updated) return false;
+		
+		if (totalTaskRan >= taskList.size()) {
+			currentTask = null;
+			return false;
+		}
+		
+		tickHalfUpdate();
 		
 		if (currentTask == sleep || scheduler.canPreempt(currentTask, currentRunTime) || currentTask.getBurstLeft() <= 0) {
 			if (scheduler.isRoundRobin(currentTask) && currentTask != sleep) {
@@ -126,11 +153,12 @@ public class OS {
 		}
 		
 		updated = true;
+		return true;
 	}
 	
 	/**
-	 *  Run the chosen task for 1 tick (ms in this case)
-	 *  Requires a tickUpdate() called before it (will not do anything otherwise)
+	 * <p> Run the chosen task for 1 tick (ms in this case) </p>
+	 * <p> Requires a tickUpdate() called before it (will not do anything otherwise) </p>
 	 */
 	public void tickRun() {
 		if (!updated) return;
@@ -152,9 +180,36 @@ public class OS {
 			currentTask.setWaitingTime(currentTask.getTurnAroundTime() - currentTask.getBurst());
 		}
 		
+		halfUpdated = false;
 		updated = false;
 	}
 	
+	/**
+	 * 1 tick, do the update and run
+	 */
+	public void tick() {
+		if (tickUpdate()) {
+			tickRun();
+		}
+	}
+	
+	/**
+	 * Try to tickHalfUpdate(), if failed then try to tickUpdate(), if failed then try to tickRun()
+	 */
+	public void tickThird() {
+		if (tickHalfUpdate()) return;
+		if (tickUpdate()) return;
+		tickRun();
+	}
+	
+	
+	/**
+	 * Try to tickUpdate(), if failed then try to tickRun()
+	 */
+	public void tickHalf() {
+		if (tickUpdate()) return;
+		tickRun();
+	}
 	/**
 	 * Run from start to finish in one time
 	 */
@@ -162,8 +217,7 @@ public class OS {
 		totalTaskRan = 0;
 		indexNext = 0;
 		currentRunTime = 0;
-		while (totalTaskRan < taskList.size()) {
-			tickUpdate();
+		while (tickUpdate()) {
 			tickRun();
 		}
 	}

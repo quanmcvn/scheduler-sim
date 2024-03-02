@@ -8,4 +8,5 @@ public interface Scheduler {
 	boolean canPreempt(Task task, int timeRan);
 	boolean isRoundRobin(Task task);
 	boolean hasTask();
+	List<Task> getAllTask();
 }

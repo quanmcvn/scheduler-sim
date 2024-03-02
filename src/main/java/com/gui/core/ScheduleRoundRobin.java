@@ -1,8 +1,6 @@
 package com.gui.core;
 
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class ScheduleRoundRobin implements Scheduler {
 	private final Queue<Task> tasks;
@@ -37,5 +35,10 @@ public class ScheduleRoundRobin implements Scheduler {
 	@Override
 	public boolean hasTask() {
 		return !tasks.isEmpty();
+	}
+	
+	@Override
+	public List<Task> getAllTask() {
+		return new ArrayList<>(tasks);
 	}
 }

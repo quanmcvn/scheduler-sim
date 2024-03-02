@@ -21,15 +21,19 @@ public class TaskController {
 	private Label waitingTime;
 	@FXML
 	private Label respondTime;
-	
+	private Task task;
 	public void setTask(Task task) {
+		this.task = task;
+		update();
+	}
+	public void update() {
 		name.setText("Name: " + task.getName());
 		burst.setText("Burst: " + task.getBurst());
 		priority.setText("Priority: " + task.getPriority());
 		arrivalTime.setText("Arrival Time: " + task.getArrivalTime());
 		burstLeft.setText("Burst Left: " + task.getBurstLeft());
-		turnAroundTime.setText("Turn Around Time: " + task.getTurnAroundTime());
-		waitingTime.setText("Waiting Time: " + task.getWaitingTime());
-		respondTime.setText("Respond Time: " + task.getRespondTime());
+		turnAroundTime.setText("Turn Around Time: " + (task.getTurnAroundTime() < 0 ? "?" : task.getTurnAroundTime()));
+		waitingTime.setText("Waiting Time: " + (task.getWaitingTime() < 0 ? "?" : task.getWaitingTime()));
+		respondTime.setText("Respond Time: " + (task.getRespondTime() < 0 ? "?" : task.getRespondTime()));
 	}
 }

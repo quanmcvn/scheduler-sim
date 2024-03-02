@@ -50,11 +50,7 @@ public class GanttChart {
 	}
 	
 	private String printchar(char c, int times) {
-		StringBuilder ret = new StringBuilder();
-		for (int i = 0; i < times; ++ i) {
-			ret.append(c);
-		}
-		return ret.toString();
+		return String.valueOf(c).repeat(Math.max(0, times));
 	}
 	
 	public String draw() {
