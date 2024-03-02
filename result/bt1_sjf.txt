@@ -1,0 +1,12 @@
+Task P1, turn_around_time: 2, waiting_time: 0, respond_time: 0
+Task P2, turn_around_time: 2, waiting_time: 1, respond_time: 1
+Task P3, turn_around_time: 8, waiting_time: 0, respond_time: 0
+Task P4, turn_around_time: 11, waiting_time: 7, respond_time: 7
+Task P5, turn_around_time: 15, waiting_time: 10, respond_time: 10
+Total: turn_around_time: 38, waiting_time: 18, respond_time: 18
+AVG  : turn_around_time: 7.6000, waiting_time: 3.6000, respond_time: 3.6000
+Total context switch: 4
+--------------------------------------------------------------------------------------
+|   P1   | P2 |               P3               |       P4       |         P5         |
+--------------------------------------------------------------------------------------
+0        2    3                                11               15                   20

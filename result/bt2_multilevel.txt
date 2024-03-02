@@ -1,0 +1,14 @@
+Task P1, turn_around_time: 85, waiting_time: 35, respond_time: 0
+Task P2, turn_around_time: 25, waiting_time: 10, respond_time: 10
+Task P3, turn_around_time: 80, waiting_time: 35, respond_time: 25
+Task P4, turn_around_time: 160, waiting_time: 120, respond_time: 110
+Task P5, turn_around_time: 10, waiting_time: 0, respond_time: 0
+Task P6, turn_around_time: 130, waiting_time: 100, respond_time: 100
+Task P7, turn_around_time: 80, waiting_time: 60, respond_time: 60
+Total: turn_around_time: 570, waiting_time: 360, respond_time: 305
+AVG  : turn_around_time: 81.4286, waiting_time: 51.4286, respond_time: 43.5714
+Total context switch: 11
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|         P1         |         P1         |      P2       |         P3         |    P1    |         P3         | P3  |    P4    |    P5    |              P4              |              P6              |         P7         |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+0                    20                   40              55                   75         85                   105   110        120        130                            160                            190                  210
