@@ -16,8 +16,8 @@ public class Task {
 		this.burst = burst;
 		this.priority = priority;
 		this.arrivalTime = arrivalTime;
-		this.burstLeft = burst;
 	    this.queueLevel = queueLevel;
+		this.burstLeft = burst;
 	    this.turnAroundTime = -1;
 		this.waitingTime = -1;
 		this.respondTime = -1;
@@ -76,6 +76,9 @@ public class Task {
 	}
 	@Override
 	public String toString() {
-		return String.format("Task: %s, burst: %d, priority: %d, arrival_time: %d, queuelevel: %d", name, burst, priority, arrivalTime, queueLevel);
+		return String.format(
+				"Task: %s, burst: %d, priority: %d, arrival_time: %d, queuelevel: %d, " +
+				"burst_left: %d, turn_around_time: %d, waiting_time: %d, respond_time: %d"
+				, name, burst, priority, arrivalTime, queueLevel, burstLeft, turnAroundTime, waitingTime, respondTime);
 	}
 }

@@ -49,13 +49,16 @@ public class GanttChart {
 		return cells.size();
 	}
 	
-	private void printchar(char c, int times) {
+	private String printchar(char c, int times) {
+		StringBuilder ret = new StringBuilder();
 		for (int i = 0; i < times; ++ i) {
-			System.out.print(c);
+			ret.append(c);
 		}
+		return ret.toString();
 	}
 	
-	public void draw() {
+	public String draw() {
+		StringBuilder ret = new StringBuilder();
 		int n = cells.size();
 		int scale = 1;
 		int total = 0;
@@ -67,30 +70,31 @@ public class GanttChart {
 			total += cell.getTime();
 		}
 
-		printchar('-', (total * scale + n + 1));
-		System.out.print('\n');
+		ret.append(printchar('-', (total * scale + n + 1)));
+		ret.append("\n");
 
-		System.out.print('|');
+		ret.append("|");
 		for (Cell cell : cells) {
 			int spaces = cell.getTime() * scale - cell.getName().length();
-			printchar(' ', (spaces / 2));
-			System.out.printf("%s", cell.getName());
-			printchar(' ', ((spaces + 1) / 2));
-			System.out.print('|');
+			ret.append(printchar(' ', (spaces / 2)));
+			ret.append(String.format("%s", cell.getName()));
+			ret.append(printchar(' ', ((spaces + 1) / 2)));
+			ret.append("|");
 		}
-		System.out.print("\n");
-		printchar('-', (total * scale + n + 1));
+		ret.append("\n");
+		ret.append(printchar('-', (total * scale + n + 1)));
 
-		System.out.print("\n");
+		ret.append("\n");
 
 		int time_now = 0;
 		for (Cell cell : cells) {
-			System.out.print(time_now);
+			ret.append(time_now);
 			int len = String.valueOf(time_now).length();
 			time_now += cell.getTime();
-			printchar(' ', (cell.getTime() * scale - len + 1));
+			ret.append(printchar(' ', (cell.getTime() * scale - len + 1)));
 		}
-		System.out.printf("%d", time_now);
-		System.out.print("\n");
+		ret.append(String.format("%d", time_now));
+		ret.append("\n");
+		return ret.toString();
 	}
 }

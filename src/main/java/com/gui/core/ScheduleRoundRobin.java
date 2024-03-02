@@ -10,6 +10,7 @@ public class ScheduleRoundRobin implements Scheduler {
 	
 	
 	public ScheduleRoundRobin(int quantum) {
+		if (quantum <= 0) throw new IllegalArgumentException("Number must be > 0");
 		tasks = new LinkedList<>();
 		this.quantum = quantum;
 	}
