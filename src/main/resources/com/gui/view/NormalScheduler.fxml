@@ -5,10 +5,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.view.NormalSchedulerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.view.NormalSchedulerController">
    <children>
-      <Label layoutX="10.0" layoutY="10.0" text="Task Queue (?):">
+      <Label layoutX="10.0" layoutY="5.0" text="Task Queue (?):">
          <font>
             <Font size="18.0" />
          </font>

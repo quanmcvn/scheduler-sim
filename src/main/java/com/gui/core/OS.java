@@ -2,6 +2,8 @@ package com.gui.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.util.*;
 
 public class OS {
@@ -11,7 +13,7 @@ public class OS {
 	private Scheduler scheduler;
 	private final CPU cpu;
 	private final GanttChart chart;
-	private String fileinput;
+	private String fileInput;
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
@@ -34,11 +36,14 @@ public class OS {
 		this.totalTaskList = new ArrayList<>();
 		this.cpu = new CPU();
 		this.chart = new GanttChart();
+		totalTaskRan = 0;
+		indexNext = 0;
+		currentRunTime = 0;
 	}
 	
 	public boolean readFromFile(String filename) {
 		taskList.clear();
-		this.fileinput = filename;
+		this.fileInput = filename;
 		File file = new File(filename);
 		Scanner scanner = null;
 		try {
@@ -56,7 +61,7 @@ public class OS {
 			int burstTime = Integer.parseInt(values[1]);
 			int priority = Integer.parseInt(values[2]);
 			int arrivalTime = Integer.parseInt(values[3]);
-			int queueLevel = Integer.parseInt(values[4]) - 1;
+			int queueLevel = Integer.parseInt(values[4]);
 			taskList.add(new Task(name, burstTime, priority, arrivalTime, queueLevel));
 		}
 		taskList.sort(Comparator.comparingInt(Task::getArrivalTime));
@@ -83,10 +88,8 @@ public class OS {
 	}
 	public String getOutputFile() {
 		String schedType = getSchedulerType();
-		return "result/" +
-				fileinput.replace("test/", "").replace(".txt", "") +
-				"_" + schedType +
-				".txt";
+		String fileName = FileSystems.getDefault().getPath(fileInput).getFileName().toString();
+		return String.format("result/%s_%s.txt", fileName, schedType);
 	}
 	
 	private int totalTaskRan = 0;
@@ -94,16 +97,20 @@ public class OS {
 	private int currentRunTime = 0;
 	// dummy task
 	private final Task sleep = new Task("sleep", 100000, 100000, 100000, 0);
-	
 	private Task currentTask = sleep;
+	private boolean updated = false;
+	private boolean halfUpdated = false;
+	private boolean isNextTickRunForceContextSwitch = false;
 	public Task getCurrentTask() {
 		return currentTask;
 	}
-	private boolean updated = false;
-	private boolean halfUpdated = false;
+	public int getGlobalTime() {
+		return globalTime;
+	}
 	/**
 	 * <p> Get notified when there is (are) task(s) coming in </p>
 	 * <p> Add that (those) task(s) to the scheduler </p>
+	 * @Return true if successfully half update
 	 */
 	public boolean tickHalfUpdate() {
 		if (halfUpdated) return false;
@@ -129,19 +136,17 @@ public class OS {
 	public boolean tickUpdate() {
 		if (updated) return false;
 		
-		if (totalTaskRan >= taskList.size()) {
-			currentTask = null;
-			return false;
-		}
+		if (done()) return false;
 		
 		tickHalfUpdate();
 		
+		if ((scheduler.isRoundRobin(currentTask) && scheduler.canPreempt(currentTask, currentRunTime)) && currentTask != sleep) {
+			isNextTickRunForceContextSwitch = true;
+		} else {
+			isNextTickRunForceContextSwitch = false;
+		}
+		
 		if (currentTask == sleep || scheduler.canPreempt(currentTask, currentRunTime) || currentTask.getBurstLeft() <= 0) {
-			if (scheduler.isRoundRobin(currentTask) && currentTask != sleep) {
-				chart.addTask(currentTask, currentRunTime);
-			} else {
-				chart.addTaskNoContextSwitch(currentTask, currentRunTime);
-			}
 			if (currentTask != sleep && currentTask.getBurstLeft() > 0) {
 				scheduler.addTask(currentTask);
 			}
@@ -159,9 +164,11 @@ public class OS {
 	/**
 	 * <p> Run the chosen task for 1 tick (ms in this case) </p>
 	 * <p> Requires a tickUpdate() called before it (will not do anything otherwise) </p>
+	 *
+	 * @Return true if successfully update
 	 */
-	public void tickRun() {
-		if (!updated) return;
+	public boolean tickRun() {
+		if (!updated) return false;
 		
 		if (currentTask.getBurst() == currentTask.getBurstLeft()) {
 			// first time run
@@ -171,6 +178,12 @@ public class OS {
 		cpu.run(currentTask, 1);
 		globalTime += 1;
 		currentRunTime += 1;
+		
+		if (isNextTickRunForceContextSwitch) {
+			chart.addTask(currentTask, 1);
+		} else {
+			chart.addTaskNoContextSwitch(currentTask, 1);
+		}
 		
 		if (currentTask.getBurstLeft() <= 0) {
 			++ totalTaskRan;
@@ -182,15 +195,15 @@ public class OS {
 		
 		halfUpdated = false;
 		updated = false;
+		return true;
 	}
 	
 	/**
 	 * 1 tick, do the update and run
 	 */
 	public void tick() {
-		if (tickUpdate()) {
-			tickRun();
-		}
+		tickUpdate();
+		tickRun();
 	}
 	
 	/**
@@ -209,6 +222,14 @@ public class OS {
 	public void tickHalf() {
 		if (tickUpdate()) return;
 		tickRun();
+	}
+	
+	public boolean done() {
+		if (totalTaskRan >= totalTaskList.size()) {
+			currentTask = null;
+			return true;
+		}
+		return false;
 	}
 	/**
 	 * Run from start to finish in one time

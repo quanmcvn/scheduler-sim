@@ -13,6 +13,12 @@ public class ScheduleSJFPreemptive implements Scheduler {
 	@Override
 	public void addTask(Task task) {
 		tasks.add(task);
+		Comparator<Task> sortByBurstByName = (lhs, rhs) -> {
+			if (lhs.getBurstLeft() != rhs.getBurstLeft())
+				return Integer.compare(lhs.getBurstLeft(), rhs.getBurstLeft());
+			return lhs.getName().compareTo(rhs.getName());
+		};
+		tasks.sort(sortByBurstByName);
 	}
 	
 	@Override

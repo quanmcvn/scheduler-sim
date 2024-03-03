@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.view.MultilevelSchedulerController">
+   <children>
+      <Label layoutX="5.0" layoutY="2.0" text="Queue 1 (roundrobin w/ quantum = 20):">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <HBox fx:id="hbox1" layoutY="20.0" prefHeight="160.0" prefWidth="1600.0" />
+      <Label layoutX="5.0" layoutY="182.0" text="Queue 2 (sjf_preemptive):">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <HBox fx:id="hbox2" layoutY="200.0" prefHeight="160.0" prefWidth="1600.0" />
+      <Label layoutX="5.0" layoutY="362.0" text="Queue 3 (fcfs):">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <HBox fx:id="hbox3" layoutY="380.0" prefHeight="160.0" prefWidth="1600.0" />
+   </children>
+</AnchorPane>

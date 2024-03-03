@@ -31,7 +31,7 @@ public class NormalSchedulerController implements SchedulerController {
 				throw new RuntimeException(e);
 			}
 			TaskController taskController = loader.getController();
-			taskController.setTask(task);
+			taskController.setTask(task, false);
 			this.hbox.getChildren().add(taskNode);
 		}
 	}

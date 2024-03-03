@@ -15,6 +15,12 @@ public class SchedulePriorityPreemptive implements Scheduler {
 	@Override
 	public void addTask(Task task) {
 		tasks.add(task);
+		Comparator<Task> sortByPrioByName = (lhs, rhs) -> {
+			if (lhs.getPriority() != rhs.getPriority())
+				return Integer.compare(lhs.getPriority(), rhs.getPriority());
+			return lhs.getName().compareTo(rhs.getName());
+		};
+		tasks.sort(sortByPrioByName);
 	}
 	
 	@Override

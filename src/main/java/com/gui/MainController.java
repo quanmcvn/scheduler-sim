@@ -58,7 +58,7 @@ public class MainController {
     private void setup() {
         if (!scheduleTypes.contains(options.getValue())) {
 			System.out.println("Didn't choose schedule type");
-//			return;
+			return;
         }
 	    String schedulerType = options.getValue();
 		Scheduler scheduler = null;
@@ -90,8 +90,8 @@ public class MainController {
 	    }
 		os = new OS();
 		os.setScheduler(scheduler);
-//	    if (!os.readFromFile(fileInsput.getText())) return;
-	    os.readFromFile("/home/quanmcvn/Desktop/Code/project/osing/lec/bt3/gui/test/bt1.txt");
+	    if (!os.readFromFile(fileInput.getText())) return;
+//	    os.readFromFile("/home/quanmcvn/Desktop/Code/project/osing/lec/bt3/gui/test/bt2.txt");
 	    try {
 			FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("view/OS.fxml")));
 			AnchorPane component = loader.load();

@@ -52,8 +52,8 @@ public class ScheduleMultilevelQueue implements Scheduler {
 	@Override
 	public List<Task> getAllTask() {
 		List<Task> tasks = new ArrayList<>();
-		for (int i = 0; i < 3; ++ i) {
-			tasks.addAll(schedulers.get(i).getAllTask());
+		for (Scheduler scheduler : schedulers) {
+			tasks.addAll(scheduler.getAllTask());
 		}
 		return tasks;
 	}

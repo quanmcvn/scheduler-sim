@@ -2,11 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="980.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.view.OSController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="980.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.view.OSController">
    <children>
       <Label layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="130.0" text="Task List:">
          <font>
@@ -15,17 +16,25 @@
       </Label>
       <HBox fx:id="hbox" layoutY="40.0" prefHeight="160.0" prefWidth="1600.0" />
       <AnchorPane fx:id="schedulerContainer" layoutY="200.0" prefHeight="540.0" prefWidth="1600.0" />
-      <Label layoutX="531.0" layoutY="830.0" text="Choosen Task: ">
+      <Label layoutX="531.0" layoutY="820.0" text="Choosen Task: ">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="currentTask" layoutX="720.0" layoutY="740.0" prefHeight="160.0" prefWidth="160.0" />
+      <AnchorPane fx:id="currentTask" layoutX="720.0" layoutY="750.0" prefHeight="160.0" prefWidth="160.0" />
       <Button layoutX="160.0" layoutY="10.0" mnemonicParsing="false" onAction="#onTickHalfUpdate" prefHeight="24.0" prefWidth="140.0" text="Tick Half Update" />
       <Button layoutX="320.0" layoutY="10.0" mnemonicParsing="false" onAction="#onTickUpdate" prefHeight="24.0" prefWidth="140.0" text="Tick Update" />
       <Button layoutX="480.0" layoutY="10.0" mnemonicParsing="false" onAction="#onTickRun" prefHeight="24.0" prefWidth="140.0" text="Tick Run" />
       <Button layoutX="640.0" layoutY="10.0" mnemonicParsing="false" onAction="#onTick" prefHeight="24.0" prefWidth="140.0" text="Tick" />
       <Button layoutX="800.0" layoutY="10.0" mnemonicParsing="false" onAction="#onTickHalf" prefHeight="24.0" prefWidth="140.0" text="Tick Half" />
       <Button layoutX="960.0" layoutY="10.0" mnemonicParsing="false" onAction="#onTickThird" prefHeight="24.0" prefWidth="140.0" text="Tick Third" />
+      <Label fx:id="globalTime" layoutX="1295.0" layoutY="11.0" text="Global TIme: 0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="1446.0" layoutY="10.0" mnemonicParsing="false" onAction="#onStat" prefHeight="24.0" prefWidth="140.0" text="Stat" />
+      <Button layoutX="1111.0" layoutY="10.0" mnemonicParsing="false" onAction="#onTickfor" prefHeight="24.0" text="Tick for" />
+      <TextField fx:id="tickInput" layoutX="1188.0" layoutY="10.0" prefHeight="24.0" prefWidth="100.0" promptText="tick(s)" />
    </children>
 </AnchorPane>
