@@ -31,6 +31,8 @@ Because there is only so much width I can cramped before the task is too small o
 
 File input format is `name, burst time, priority, arrival time, queue level` (even though queue level is only needed in multilevel, it will complain if the format is incorrect)
 
+Smaller number in priority will be run fist (prio 1 > prio 2)
+
 There are 2 tests in `test/` (actually it's from the homework 1, one stone two birds)
 
 Click `Setup`
@@ -39,7 +41,7 @@ Click `Setup`
 
 Now that the task list has been loaded, there are 8 more buttons.
 
-First, some theory. There are 3 phase in 1 tick (I made it up for easy showing):
+First, some theory. There are 3 phases in 1 tick (I made it up for easy showing):
 - The OS is notified when there is (are) task(s) coming in, it will then add that (those) task(s) to the scheduler's queue
 - The scheduler report the task will be ran next (removing that task from the ready queue, and put that task to be ran next)
 - The task is ran, some of the stats will be changed here (tat, waiting time, respond time, context switches)
