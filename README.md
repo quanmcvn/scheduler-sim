@@ -16,11 +16,13 @@ Choose scheduler type
 ![Choose scheduler type](./img/choose_scheduler.png)
 
 Choosing round robin will open input for quantum
+
 ![Quantum Input](./img/quantum_input.png)
 
 (the multilevel is hardcoded (sorry!) to having 3 queues, round robin quantum = 20, sjf preemptive and fcfs)
 
 Choose Input File
+
 ![Choose input file](./img/choose_file.png)
 
 The current task list only support viewing at most 10 tasks. 
