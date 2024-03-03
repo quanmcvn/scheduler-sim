@@ -2,7 +2,6 @@ package com.gui.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.util.*;
 
@@ -52,17 +51,21 @@ public class OS {
 			System.out.print("There is no file '" + filename + "'. Try again?");
 			return false;
 		}
-		
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-			String[] values = line.split(",\\s*");
-			
-			String name = values[0];
-			int burstTime = Integer.parseInt(values[1]);
-			int priority = Integer.parseInt(values[2]);
-			int arrivalTime = Integer.parseInt(values[3]);
-			int queueLevel = Integer.parseInt(values[4]);
-			taskList.add(new Task(name, burstTime, priority, arrivalTime, queueLevel));
+		try {
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				String[] values = line.split(",\\s*");
+				
+				String name = values[0];
+				int burstTime = Integer.parseInt(values[1]);
+				int priority = Integer.parseInt(values[2]);
+				int arrivalTime = Integer.parseInt(values[3]);
+				int queueLevel = Integer.parseInt(values[4]);
+				taskList.add(new Task(name, burstTime, priority, arrivalTime, queueLevel));
+			}
+		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+			System.out.println("Invalid file input format, check again?");
+			return false;
 		}
 		taskList.sort(Comparator.comparingInt(Task::getArrivalTime));
 		totalTaskList.addAll(taskList);
