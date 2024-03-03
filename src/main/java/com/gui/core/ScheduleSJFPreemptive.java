@@ -4,47 +4,32 @@ import java.util.*;
 
 public class ScheduleSJFPreemptive implements Scheduler {
 	
-	private final ArrayList<Task> tasks;
+	private final PriorityQueue<Task> tasks;
+	
+	private final Comparator<Task> sortByBurstByName = (lhs, rhs) -> {
+		if (lhs.getBurstLeft() != rhs.getBurstLeft())
+			return Integer.compare(lhs.getBurstLeft(), rhs.getBurstLeft());
+		return lhs.getName().compareTo(rhs.getName());
+	};
 	
 	public ScheduleSJFPreemptive() {
-		tasks = new ArrayList<>();
+		tasks = new PriorityQueue<>(sortByBurstByName);
 	}
 	
 	@Override
 	public void addTask(Task task) {
 		tasks.add(task);
-		Comparator<Task> sortByBurstByName = (lhs, rhs) -> {
-			if (lhs.getBurstLeft() != rhs.getBurstLeft())
-				return Integer.compare(lhs.getBurstLeft(), rhs.getBurstLeft());
-			return lhs.getName().compareTo(rhs.getName());
-		};
-		tasks.sort(sortByBurstByName);
 	}
 	
 	@Override
 	public Task getTask(Task lastTask) {
 		if (tasks.isEmpty()) return null;
-		Comparator<Task> sortByBurstByName = (lhs, rhs) -> {
-			if (lhs.getBurstLeft() != rhs.getBurstLeft())
-				return Integer.compare(lhs.getBurstLeft(), rhs.getBurstLeft());
-			if (lhs.getName().equals(lastTask.getName())) return -1;
-			return lhs.getName().compareTo(rhs.getName());
-		};
-		Task ret = Collections.min(tasks, sortByBurstByName);
-		tasks.remove(ret);
-		return ret;
+		return tasks.poll();
 	}
 	@Override
 	public boolean canPreempt(Task task, int timeRan) {
 		if (tasks.isEmpty()) return false;
-		Comparator<Task> sortByBurstByName = (lhs, rhs) -> {
-			if (lhs.getBurstLeft() != rhs.getBurstLeft())
-				return Integer.compare(lhs.getBurstLeft(), rhs.getBurstLeft());
-			if (lhs.getName().equals(task.getName())) return -1;
-			return lhs.getName().compareTo(rhs.getName());
-		};
-		Task ret = Collections.min(tasks, sortByBurstByName);
-		return sortByBurstByName.compare(ret, task) < 0;
+		return sortByBurstByName.compare(tasks.peek(), task) < 0;
 	}
 	@Override
 	public boolean isRoundRobin(Task task) {

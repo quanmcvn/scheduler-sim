@@ -75,4 +75,9 @@ Multiple `Tick Half Update` or `Tick Update` without `Tick Run` won't do anythin
 
 If there is no task to run, os will run dummy task `sleep` with big arrival time, big burst left, least priority (not that it matters)
 
-Because the problem wants to minimize context switches (when there are more than 1 tasks can be run, priotize the task that match last task ran to minimize context switches), there is no way to use the priority queue in sjf_preemptive and priority_preemptive. They actually use a list and sort whenever needed (too bad).
+~~Because the problem wants to minimize context switches (when there are more than 1 tasks can be run, priotize the task that match last task ran to minimize context switches), there is no way to use the priority queue in sjf_preemptive and priority_preemptive. They actually use a list and sort whenever needed (too bad).~~
+Actually it's me being stoopid. 
+
+But the fcfs one wants the name smaller run first so it's actually a priority queue instead of a queue.
+
+Also the sjf but it is already using a priority queue anyway.

@@ -1,7 +1,6 @@
 package com.gui.core;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -9,7 +8,10 @@ public class ScheduleSJF implements Scheduler {
 	private final PriorityQueue<Task> tasks;
 	
 	public ScheduleSJF() {
-		this.tasks = new PriorityQueue<>(Comparator.comparingInt(Task::getBurstLeft));
+		this.tasks = new PriorityQueue<>((lhs, rhs) -> {
+			if (lhs.getBurstLeft() != rhs.getBurstLeft()) return Integer.compare(lhs.getBurstLeft(), rhs.getBurstLeft());
+			return lhs.getName().compareTo(rhs.getName());
+		});
 	}
 	
 	@Override
