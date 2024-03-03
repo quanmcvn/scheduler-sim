@@ -188,7 +188,7 @@ public class OS {
 			chart.addTaskNoContextSwitch(currentTask, 1);
 		}
 		
-		if (currentTask.getBurstLeft() <= 0) {
+		if (currentTask != sleep && currentTask.getBurstLeft() <= 0) {
 			++ totalTaskRan;
 			// turn around time = global_time - arrival_time
 			currentTask.setTurnAroundTime(globalTime - currentTask.getArrivalTime());
@@ -218,7 +218,6 @@ public class OS {
 		tickRun();
 	}
 	
-	
 	/**
 	 * Try to tickUpdate(), if failed then try to tickRun()
 	 */
@@ -234,6 +233,7 @@ public class OS {
 		}
 		return false;
 	}
+	
 	/**
 	 * Run from start to finish in one time
 	 */
@@ -249,7 +249,6 @@ public class OS {
 	/**
 	 * @return Full statistic of the run (avg tat, waiting time, respond time, and gantt chart)
 	 */
-	
 	public String stat() {
 		StringBuilder ret = new StringBuilder();
 		int totalTurnAroundTime = 0;

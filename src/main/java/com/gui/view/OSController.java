@@ -134,7 +134,7 @@ public class OSController {
 		if (input <= 0) {
 			return;
 		}
-		System.out.println("Skipping (at most) " + input + " ...");
+		System.out.println("Skipping (at most) " + input + " tick(s) ...");
 		for (int i = 0; i < input; ++ i) {
 			if (os.done()) break;
 			os.tick();

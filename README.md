@@ -69,4 +69,8 @@ Multiple `Tick Half Update` or `Tick Update` without `Tick Run` won't do anythin
 ![demo run](./img/demo_run.png)
 ![demo stat](./img/demo_stat.png)
 
+<h4> Side quirk </h4>
 
+If there is no task to run, os will run dummy task `sleep` with big arrival time, big burst left, least priority (not that it matters)
+
+Because the problem wants to minimize context switches (when there are more than 1 tasks can be run, priotize the task that match last task ran to minimize context switches), there is no way to use the priority queue in sjf_preemptive and priority_preemptive. They actually use a list and sort whenever needed (too bad).

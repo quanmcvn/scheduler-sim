@@ -37,15 +37,19 @@ public class ScheduleSJFPreemptive implements Scheduler {
 	@Override
 	public boolean canPreempt(Task task, int timeRan) {
 		if (tasks.isEmpty()) return false;
-		Comparator<Task> sortByBurstByName = (lhs, rhs) -> {
-			if (lhs.getBurstLeft() != rhs.getBurstLeft())
-				return Integer.compare(lhs.getBurstLeft(), rhs.getBurstLeft());
-			if (lhs.getName().equals(task.getName())) return -1;
-			return lhs.getName().compareTo(rhs.getName());
-		};
-		Task ret = Collections.min(tasks, sortByBurstByName);
-		// intended, since we don't duplicate task
-		return ret != task;
+		// actually don't need to do computation here (for a worse performance)
+		// if task is better, it will be added in and taken out next getTask() rightaway
+		// if it is not, then we are right
+		return true;
+//		Comparator<Task> sortByBurstByName = (lhs, rhs) -> {
+//			if (lhs.getBurstLeft() != rhs.getBurstLeft())
+//				return Integer.compare(lhs.getBurstLeft(), rhs.getBurstLeft());
+//			if (lhs.getName().equals(task.getName())) return -1;
+//			return lhs.getName().compareTo(rhs.getName());
+//		};
+//		Task ret = Collections.min(tasks, sortByBurstByName);
+//		System.out.printf("Task ret: %s\nTask task: %s\n", ret, task);
+//		return sortByBurstByName.compare(ret, task) < 0;
 	}
 	@Override
 	public boolean isRoundRobin(Task task) {
