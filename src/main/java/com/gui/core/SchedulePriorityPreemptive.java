@@ -29,7 +29,7 @@ public class SchedulePriorityPreemptive implements Scheduler {
 	@Override
 	public boolean canPreempt(Task task, int timeRan) {
 		if (tasks.isEmpty()) return false;
-		return sortByPriorityByName.compare(tasks.peek(), task) < 0;
+		return (tasks.peek().getPriority() <  task.getPriority());
 	}
 	@Override
 	public boolean isRoundRobin(Task task) {

@@ -29,7 +29,7 @@ public class ScheduleSJFPreemptive implements Scheduler {
 	@Override
 	public boolean canPreempt(Task task, int timeRan) {
 		if (tasks.isEmpty()) return false;
-		return sortByBurstByName.compare(tasks.peek(), task) < 0;
+		return (tasks.peek().getBurstLeft() <  task.getBurstLeft());
 	}
 	@Override
 	public boolean isRoundRobin(Task task) {
